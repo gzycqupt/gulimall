@@ -60,11 +60,11 @@ docker安装mysql
 docker images
 创建实例并启动
 
-docker run -p 3306:3306 --name mysql \
+docker run -p 3306:3306 --name mysql03 \
 -v /mydata/mysql/log:/var/log/mysql \
 -v /mydata/mysql/data:/var/lib/mysql \
 -v /mydata/mysql/conf:/etc/mysql \
--e MYSQL_ROOT_PASSWORD=root \
+-e MYSQL_ROOT_PASSWORD=123456 \
 -d mysql:5.7
 
 

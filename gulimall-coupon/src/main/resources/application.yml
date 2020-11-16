@@ -1,8 +1,8 @@
 #spring:
 #  datasource:
 #    username: root
-#    password: root
-#    url: jdbc:mysql://192.168.56.10:3306/gulimall_sms
+#    password: 123456
+#    url: jdbc:mysql://192.168.11.148:3306/gulimall_sms
 #    driver-class-name: com.mysql.jdbc.Driver
 #  cloud:
 #    nacos:
@@ -19,4 +19,4 @@
 #      id-type: auto
 #server:
 #  port: 7000
-
+#
