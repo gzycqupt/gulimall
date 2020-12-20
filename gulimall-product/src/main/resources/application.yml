@@ -17,6 +17,9 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
     cache: false
+  redis:
+    host: 192.168.11.149
+    port: 6379
 
 
 mybatis-plus:
@@ -30,4 +33,5 @@ server:
   port: 10000
 logging:
   level:
-    com.atguigu.gulimall: debug
+    com.atguigu.gulimall: error
+
