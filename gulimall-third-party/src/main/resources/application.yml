@@ -9,6 +9,10 @@ spring:
       oss:
         endpoint: oss-cn-beijing.aliyuncs.com
         bucket: gulimall-gzy
+      sms:
+        host: http://dingxin.market.alicloudapi.com
+        path: /dx/sendSms
+        appcode: 1561d204bfb1401c922697992aeaad50
   application:
     name: gulimall-third-party
 
