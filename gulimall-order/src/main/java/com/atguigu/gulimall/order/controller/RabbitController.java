@@ -3,6 +3,7 @@ package com.atguigu.gulimall.order.controller;
 import com.atguigu.gulimall.order.entity.OrderEntity;
 import com.atguigu.gulimall.order.entity.OrderReturnReasonEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,11 +28,11 @@ public class RabbitController {
                 reasonEntity.setId(1L);
                 reasonEntity.setCreateTime(new Date());
                 reasonEntity.setName("哈哈-" + i);
-                rabbitTemplate.convertAndSend("hello-java-exchange", "hello-java", reasonEntity);
+                rabbitTemplate.convertAndSend("hello-java-exchange", "hello-java", reasonEntity,new CorrelationData(UUID.randomUUID().toString()));
             } else {
                 OrderEntity entity = new OrderEntity();
                 entity.setOrderSn(UUID.randomUUID().toString());
-                rabbitTemplate.convertAndSend("hello-java-exchange", "hello-java", entity);
+                rabbitTemplate.convertAndSend("hello-java-exchange", "hello-java", entity,new CorrelationData(UUID.randomUUID().toString()));
             }
         }
         return "OK";

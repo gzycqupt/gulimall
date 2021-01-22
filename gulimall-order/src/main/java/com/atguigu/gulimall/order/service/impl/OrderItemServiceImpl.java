@@ -1,10 +1,15 @@
 package com.atguigu.gulimall.order.service.impl;
 
+import com.atguigu.gulimall.order.entity.OrderEntity;
 import com.atguigu.gulimall.order.entity.OrderReturnReasonEntity;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,7 +21,7 @@ import com.atguigu.gulimall.order.dao.OrderItemDao;
 import com.atguigu.gulimall.order.entity.OrderItemEntity;
 import com.atguigu.gulimall.order.service.OrderItemService;
 
-
+@RabbitListener(queues={"hello-java-queue"})
 @Service("orderItemService")
 public class OrderItemServiceImpl extends ServiceImpl<OrderItemDao, OrderItemEntity> implements OrderItemService {
 
@@ -44,12 +49,29 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemDao, OrderItemEnt
      *
      * @param message
      */
-    @RabbitListener(queues={"hello-java-queue"})
+    //@RabbitListener(queues={"hello-java-queue"})
+    @RabbitHandler
     public void recieveMessage(Message message,
                                OrderReturnReasonEntity content,
                                Channel channel){
+        System.out.println("接收到消息。。。"+content);
         byte[] body = message.getBody();
-        System.out.println("接受到消息。。。内容："+message+"====>内容："+content);
+        MessageProperties properties = message.getMessageProperties();
+        //channel内按顺序自增
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        System.out.println("deliveryTag==>"+deliveryTag);
+        //签收货物，非批量模式
+        try {
+            channel.basicAck(deliveryTag,false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("消息处理完成："+content.getName());
+    }
+
+    @RabbitHandler
+    public void reciveMessage2(OrderEntity content){
+        System.out.println("接收到消息。。。"+content);
     }
 
 }

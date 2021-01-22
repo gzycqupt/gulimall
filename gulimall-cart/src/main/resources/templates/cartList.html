@@ -219,7 +219,7 @@
 	<script src="/static/cart/js/index.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		function toTrade() {
-			window.location.href = "http://cart.gmall.com:8087/toTrade";
+			window.location.href = "http://order.gulimall.com/toTrade";
 		}
 
 		function toItem(skuId) {
@@ -774,7 +774,7 @@
 
 		$(".itemCheck").click(function () {
 			var skuId = $(this).attr("skuId");
-			var check = $(this).pop("checked");
+			var check = $(this).prop("checked");
 			location.href = "http://cart.gulimall.com/checkItem?skuId="+skuId+"&check="+(check?1:0);
 		})
 
